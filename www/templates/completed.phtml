@@ -1,0 +1,148 @@
+<section class="completed">
+	<dl>
+	<?php 
+		
+		$array = array(
+					"pijn" => array(
+							"waar" => "U heeft aangegeven gewrichtspijn te hebben.", 
+							"onwaar" => "U heeft aangegeven geen gewrichtspijn te hebben."
+					),
+					"gewrichtengroot" => array(
+							"waar" => "U heeft last van grote gewrichten zoals uw rug, knieën, schouders, polsen of ellebogen.",
+							"onwaar" => "U heeft geen last van grote gewrichten zoals uw rug, knieën, schouders, polsen of ellebogen."
+					),
+					"gewrichtenklein" => array(
+							"waar" => "U heeft last van kleine gewrichten zoals uw vingers of tenen.",
+							"onwaar" => "U heeft geen last van kleine gewrichten zoals uw vingers of tenen."
+					),
+					"klachtenrug" => array(
+							"waar" => "U heeft last van uw rug.",
+							"onwaar" => "U heeft geen last van uw rug."
+					),
+					"klachtenschouders" => array(
+							"waar" => "U heeft last van uw schouders.",
+							"onwaar" => "U heeft geen last van uw schouders."
+					),
+					"klachtenelleboog" => array(
+							"waar" => "U heeft last van uw elleboog.",
+							"onwaar" => "U heeft geen last van uw elleboog."
+					),
+					"klachtenknie" => array(
+							"waar" => "U heeft last van uw knieën.",
+							"onwaar" => "U heeft geen last van uw knieën."
+					),
+					"klachtenheupen" => array(
+							"waar" => "U heeft last van uw heupen.",
+							"onwaar" => "U heeft geen last van uw heupen."
+					),
+					"klachtenenkels" => array(
+							"waar" => "U heeft last van uw enkels.",
+							"onwaar" => "U heeft geen last van uw enkels."
+					),
+					"klachtenellebogen" => array(
+							"waar" => "U heeft last van uw polsen.",
+							"onwaar" => "U heeft geen last van uw polsen."
+					),
+					"klachtenpolsen" => array(
+							"waar" => "U heeft last van uw polsen.",
+							"onwaar" => "U heeft geen last van uw polsen."
+					),
+					"pijnstillers" => array(
+							"ontstekingsremmend" => "U gebruikt ontstekingsremmende pijnstillers.",
+							"paracetamol" => "U gebruikt paracetamol.",
+							"onwaar" => "U gebruikt geen pijnstillers."
+					),
+					"pijnstillerswerkt" => array(
+							"waar" => "De pijnstillers die u gebruikt hebben effect.",
+							"onwaar" => "De pijnstillers die u gebruikt hebben geen effect."
+					),
+					"leeftijd" => array(
+							"0-20" => "U bent tussen de 0 en 20 jaar.",
+							"20-40" => "U bent tussen de 20 en 40 jaar.",
+							"40-60" => "U bent tussen de 40 en 60 jaar.",
+							"60+" => "U bent 60 jaar of ouder"
+					),
+					"gewrichtentypeklein" => array(
+							"mcp" => "",
+							"dip" => "",
+							"pip" => ""
+					),
+					"bewegenhelpt" => array(
+							"waar" => "De pijn wordt minder wanneer u beweegt.",
+							"onwaar" => "De pijn wordt niet minder wanneer u beweegt.",
+							"neutraal" => "De pijn wordt niet meer, maar ook niet minder wanneer u beweegt."
+					),
+					"ochtendstijfheid" => array(
+							"waar" => "U heeft last van ochtendstijfheid.",
+							"onwaar" =>	"U heeft geen last van ochtendstijfheid."
+					),
+					"huidaandoening" => array(
+							"waar" => "U heeft last van rode en/of zilverwitte schilferige verdikkingen van de huid.",
+							"onwaar" => "U heeft geen last van rode en/of zilverwitte schilferige verdikkingen van de huid."
+					),
+					"stijfheiddag" => array(
+							"waar" => "U heeft last van stijfheid gedurende de dag.",
+							"onwaar" => "U heeft geen last van stijfheid gedurende de dag."
+					),
+					"aanval" => array(
+							"waar" => "U heeft last van gewrichtspijn aanvallen.",
+							"onwaar" => "U heeft geen last van gewrichtspijn aanvallen."
+					),
+					"duur" => array(
+							"lang" => "De klachten bestaan al langer dan 6 weken.",
+							"kort" => "De klachten bestaan korten dan 6 weken."
+					),
+					"ogen" => array(
+							"waar" => "U heeft last van uw ogen of recent een oogontsteking gehad.",
+							"onwaar" => "U heeft geen last van uw ogen en recent geen oogontsteking gehad."
+					),
+					"symmetrisch" => array(
+							"waar" => "De pijn die u heeft is symmetrisch.",
+							"onwaar" => "De pijn die u heeft is asymmetrisch."
+					),
+					"zwaarwerk" => array(
+							"waar" => "U heeft aangegeven in uw leven fysiek zwaar werk te hebben verricht.",
+							"onwaar" => "U heeft aangegeven in uw leven geen fysiek zwaar werk te hebben verricht."
+					),
+					"knobbelteen" => array(
+							"waar" => "U heeft last van een knobbel op uw dikke teen.",
+							"onwaar" => "U heeft geen last van een knobbel op uw dikke teen."
+					) 
+			);
+		
+		foreach ($state->goals as $goal): ?>
+		<?php if (($answer = $goal->answer($state)) || $state->facts[$goal->name] != STATE_UNDEFINED): ?>
+			<dt><?=$goal->description?></dt>
+			<dd><?php
+				echo $answer
+					? $state->substitute_variables($answer->description, ['Template', 'html'])
+					: '<pre>' . $state->facts[$goal->name] . '</pre>';
+				?></dd>
+				
+				<dt><?php echo "Deze diagnose is gesteld op basis van de volgende informatie:" ?></dt>
+				<?php foreach($state->facts as $name => $value):
+					echo "<dd>";
+					if($name != "undefined" and $name != "type"){
+						echo $array[$name][$state->resolve($value)];
+					}
+					 echo "</dd>";
+				
+							
+				endforeach?>
+				
+				<?php if ($state->facts[$goal->name] != "geen reuma" && $state->facts[$goal->name] != STATE_UNDEFINED):
+					$string = $state->facts[$goal->name];
+					if ($string == 'Bechterew') $string = 'ziekte-van-bechterew';
+					 if ($string == 'RA') $string = 'reumatoide-artritis';
+					 if ($string == 'AP') $string = 'artritis-psoriatica';
+					 if ($string == 'JIA') $string = 'jeugdreuma/over-de-ziekte';
+					 if ($string == 'PMR') $string = 'polymyalgia-rheumathica-pmr';
+					echo '<dt>Meer informatie over deze vorm van reuma vindt u <a href="http://www.reumafonds.nl/informatie-voor-doelgroepen/patienten/vormen-van-reuma/'.$string.'" target="_blank">hier</a>.</dt>';
+				endif
+				?>
+				
+
+			<?php endif ?>
+	<?php endforeach ?>
+	</dl>
+</section>

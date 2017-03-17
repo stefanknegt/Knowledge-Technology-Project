@@ -1,0 +1,24 @@
+<section class="question">
+	<div class="question-wrapper">
+		<p><?=$state->substitute_variables($question->description, ['Template', 'html'])?></p>
+			<ol class="options">
+				<?php foreach ($question->options as $option): ?>
+				<li>
+					<label>
+						<input type="radio" name="answer" value="<?=_encode($option->consequences)?>">
+						<?=$state->substitute_variables($option->description, ['Template', 'html'])?>
+					</label>
+				</li>
+				<?php endforeach ?>
+				<?php if($question->skippable): ?>
+				<li class="skip-option">
+					<label>
+						<input type="radio" name="answer" value="<?=_encode(array())?>">
+						I don't know
+					</label>
+				</li>
+				<?php endif ?>
+			</ol>
+			<button type="submit">Continue…</button>
+		</div>
+</section>

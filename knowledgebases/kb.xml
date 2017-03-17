@@ -1,0 +1,800 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<knowledge> 
+    <title>Reuma</title>
+    <description>
+        Determines if and what type of rheumatism you have.
+    </description>
+ 
+    <goal name="type">
+        <description>Diagnose</description>
+        <answer value="Fibromyalgie">Wij denken dat u last heeft van Fibromyalgie.</answer>
+        <answer value="RA">Wij denken dat u last heeft van Reumatoïde Artritis.</answer>
+        <answer value="Artrose">Wij denken dat u last heeft van Artrose.</answer>
+        <answer value="AP">Wij denken dat u last heeft van  Artritis Psoriatica.</answer>
+        <answer value="PMR">Wij denken dat u last heeft van Polymyalgia Rheumatica.</answer>
+        <answer value="JIA">Wij denken dat u last heeft van Juveniele Idiopathische Artritis, ook wel bekend als jeugdreuma.</answer>
+        <answer value="Jicht">Wij denken dat u last heeft van Jicht.</answer>
+        <answer value="geen reuma">Wij denken dat u geen last heeft van reuma. Heeft u echter wel klachten, dan raden wij aan uw huisarts te bezoeken.</answer>
+ 
+         
+        <answer value="$undefined">U heeft misschien last van mijn reuma, maar wij konden het type reuma niet identificeren. Heeft u echter wel klachten, dan raden wij aan uw huisarts te bezoeken.</answer>
+    </goal>
+ 
+    <rule>
+        <if>
+            <and>
+                <and>
+                    <fact name="pijn">waar</fact>
+                    <or>
+                        <fact name="leeftijd">20-40</fact>
+                        <fact name="leeftijd">40-60</fact>
+                        <fact name="leeftijd">60+</fact>
+                    </or>
+                    <fact name="gewrichtengroot">waar</fact>
+                    <frequency count="5">
+                        <fact name="gewrichtenklein">waar</fact>
+                        <fact name="klachtenrug">waar</fact>
+                        <fact name="klachtenschouders">waar</fact>
+                        <fact name="klachtenellebogen">waar</fact>
+                        <fact name="klachtenknie">waar</fact>
+                        <fact name="klachtenenkels">waar</fact>
+                        <fact name="klachtenpolsen">waar</fact>
+                    </frequency>
+                </and>
+                <or>
+                    <and>
+                        <fact name="pijnstillers">ontstekingsremmend</fact>
+                        <fact name="pijnstillerswerkt">onwaar</fact>
+                    </and>
+                    <fact name="pijnstillers">paracetamol</fact>
+                    <fact name="pijnstillers">onwaar</fact>
+                </or>
+            </and>
+ 
+             
+        </if>
+        <then>
+            <fact name="type">Fibromyalgie</fact>
+        </then>
+    </rule>
+    <rule>
+        <if>
+            <and>
+                <fact name="pijn">waar</fact>
+                <or>
+                    <fact name="leeftijd">40-60</fact>
+                    <fact name="leeftijd">60+</fact>
+                </or>
+                <fact name="gewrichtenklein">waar</fact>
+                <fact name="gewrichtentypeklein">pip</fact>
+                <fact name="bewegenhelpt">waar</fact>
+                <fact name="ochtendstijfheid">waar</fact>
+                <or>
+                    <and>
+                        <fact name="pijnstillers">ontstekingsremmend</fact>
+                        <fact name="pijnstillerswerkt">waar</fact>
+                    </and>
+                    <fact name="pijnstillers">paracetamol</fact>
+                    <fact name="pijnstillers">onwaar</fact>
+                </or>
+                <fact name="huidaandoening">onwaar</fact>
+            </and>
+        </if>
+        <then>
+            <fact name="type">RA</fact>
+        </then>
+    </rule>
+    <rule>
+        <if>
+            <and>
+                <fact name="pijn">waar</fact>
+                <fact name="leeftijd">60+</fact>
+                <fact name="stijfheiddag">waar</fact>
+                <fact name="zwaarwerk">waar</fact>
+                <or>
+                    <and>
+                        <fact name="pijnstillers">ontstekingsremmend</fact>
+                        <fact name="pijnstillerswerkt">onwaar</fact>
+                    </and>
+                    <and>
+                        <fact name="pijnstillers">paracetamol</fact>
+                        <fact name="pijnstillerswerkt">waar</fact>
+                    </and>
+                    <fact name="pijnstillers">onwaar</fact>
+                </or>
+            </and>
+        </if>
+        <then>
+            <fact name="type">Artrose</fact>
+        </then>
+    </rule>
+    <rule>
+        <if>
+            <and>
+                <fact name="pijn">waar</fact>
+                <or>
+                    <fact name="leeftijd">40-60</fact>
+                    <fact name="leeftijd">60+</fact>
+                </or>
+                <fact name="gewrichtenklein">waar</fact>
+                <fact name="gewrichtentypeklein">dip</fact>
+                <fact name="bewegenhelpt">waar</fact>
+                <fact name="ochtendstijfheid">waar</fact>
+                <or>
+                    <and>
+                        <fact name="pijnstillers">ontstekingsremmend</fact>
+                        <fact name="pijnstillerswerkt">waar</fact>
+                    </and>
+                    <fact name="pijnstillers">paracetamol</fact>
+                    <fact name="pijnstillers">onwaar</fact>
+                </or>
+                <fact name="huidaandoening">waar</fact>
+                <fact name="symmetrisch">onwaar</fact>
+            </and>
+        </if>
+        <then>
+            <fact name="type">AP</fact>
+        </then>
+    </rule>
+    <rule>
+        <if>
+            <and>
+                <fact name="pijn">waar</fact>
+                <fact name="leeftijd">20-40</fact>
+                <fact name="bewegenhelpt">waar</fact>
+                <fact name="gewrichtengroot">waar</fact>
+                <fact name="klachtenrug">waar</fact>
+                <fact name="ochtendstijfheid">waar</fact>
+                <frequency count="1">
+                    <fact name="klachtenknie">waar</fact>
+                    <fact name="klachtenenkels">waar</fact>
+                </frequency>
+                <or>
+                    <and>
+                        <fact name="pijnstillers">ontstekingsremmend</fact>
+                        <fact name="pijnstillerswerkt">waar</fact>
+                    </and>
+                    <fact name="pijnstillers">paracetamol</fact>
+                    <fact name="pijnstillers">onwaar</fact>
+                </or>
+            </and>
+        </if>
+        <then>
+            <fact name="type">Bechterew</fact>
+        </then>
+    </rule>
+    <rule>
+        <if>
+ 
+            <and>
+                <fact name="pijn">waar</fact>
+                <fact name="knobbelteen">waar</fact>
+                <or>
+                    <fact name="leeftijd">20-40</fact>
+                    <fact name="leeftijd">40-60</fact>
+                    <fact name="leeftijd">60+</fact>
+                </or>
+                <fact name="stijfheiddag">waar</fact>
+                <or>
+                    <and>
+                        <fact name="pijnstillers">ontstekingsremmend</fact>
+                        <fact name="pijnstillerswerkt">waar</fact>
+                    </and>
+                    <fact name="pijnstillers">paracetamol</fact>
+                    <fact name="pijnstillers">onwaar</fact>
+                </or>
+                <fact name="aanval">waar</fact>
+            </and>
+        </if>
+        <then>
+            <fact name="type">Jicht</fact>
+        </then>
+    </rule>
+    <rule>
+        <if>
+            <and>
+                <fact name="pijn">waar</fact>
+                <fact name="leeftijd">0-20</fact>
+                <fact name="ochtendstijfheid">onwaar</fact>
+                <fact name="gewrichtengroot">waar</fact>
+                <fact name="duur">lang</fact>
+                <fact name="ogen">waar</fact>
+                <or>
+                    <and>
+                        <fact name="pijnstillers">ontstekingsremmend</fact>
+                        <fact name="pijnstillerswerkt">waar</fact>
+                    </and>
+                    <fact name="pijnstillers">paracetamol</fact>
+                    <fact name="pijnstillers">onwaar</fact>
+                </or>
+                <frequency count="2">
+                    <fact name="klachtenknie">waar</fact>
+                    <fact name="klachtenenkels">waar</fact>
+                    <fact name="klachtenpolsen">waar</fact>
+                    <fact name="klachtenschouders">waar</fact>
+                    <fact name="klachtenheupen">waar</fact>
+                </frequency>
+            </and>
+        </if>
+        <then>
+            <fact name="type">JIA</fact>
+        </then>
+    </rule>
+    <rule>
+        <if>
+            <and>
+                <fact name="pijn">waar</fact>
+                <or>
+                    <fact name="leeftijd">40-60</fact>
+                    <fact name="leeftijd">60+</fact>
+                </or>
+                <or>
+                    <and>
+                        <fact name="pijnstillers">ontstekingsremmend</fact>
+                        <fact name="pijnstillerswerkt">waar</fact>
+                    </and>
+                    <fact name="pijnstillers">paracetamol</fact>
+                    <fact name="pijnstillers">onwaar</fact>
+                </or>
+                <fact name="gewrichtengroot">waar</fact>
+                <fact name="aanval">waar</fact>
+                <fact name="bewegenhelpt">onwaar</fact>
+                <fact name="symmetrisch">waar</fact>
+                <frequency count="1">
+                    <fact name="klachtenschouders">waar</fact>
+                    <fact name="klachtenheupen">waar</fact>
+                    <fact name="klachtenrug">waar</fact>
+                </frequency>
+            </and>
+        </if>
+        <then>
+            <fact name="type">PMR</fact>
+        </then>
+    </rule>
+     
+    <rule>
+        <if>
+            <frequency count="1">
+                <fact name="pijn">onwaar</fact>
+            </frequency>
+        </if>
+        <then>
+            <fact name="type">geen reuma</fact>
+        </then>
+    </rule>
+     
+     
+    <question>
+        <description>Heeft u last van gewrichtspijn?</description>
+        <option>
+            <description>Ja</description>
+            <then>
+                <fact name="pijn">waar</fact>
+            </then>
+        </option>
+        <option>
+            <description>Nee</description>
+            <then>
+                <fact name="pijn">onwaar</fact>
+            </then>
+        </option>
+    </question>
+ 
+ 
+    <question>
+        <description><![CDATA[Wat is uw <a href="#" class="selector" title="Bepaalve vormen van reuma komen alleen voor in bepaalde leeftijdsgroepen">leeftijd</a>?]]></description>
+        <option>
+            <description>0-20</description>
+            <then>
+                <fact name="leeftijd">0-20</fact>
+            </then>
+        </option>
+ 
+        <option>
+            <description>20-40</description>
+            <then>
+                <fact name="leeftijd">20-40</fact>
+            </then>
+        </option>
+        <option>
+            <description>40-60</description>
+            <then>
+                <fact name="leeftijd">40-60</fact>
+            </then>
+        </option>
+        <option>
+            <description>60+</description>
+            <then>
+                <fact name="leeftijd">60+</fact>
+            </then>
+        </option>
+    </question>
+ 
+    <question>
+        <description>Hoe lang bestaan de klachten al?</description>
+        <option>
+            <description>Korter dan 6 weken</description>
+            <then>
+                <fact name="duur">kort</fact>
+            </then>
+        </option>
+        <option>
+            <description>Langer dan 6 weken</description>
+            <then>
+                <fact name="duur">lang</fact>
+            </then>
+        </option>
+    </question>
+ 
+    <question>
+        <description>Heeft u last van ochtend stijfheid?</description>
+        <option>
+            <description>Ja</description>
+            <then>
+                <fact name="ochtendstijfheid">waar</fact>
+            </then>
+        </option>
+        <option>
+            <description>Nee</description>
+            <then>
+                <fact name="ochtendstijfheid">onwaar</fact>
+            </then>
+        </option>
+    </question>
+ 
+    <question>
+        <description>Heeft u last van stijfheid gedurende de dag?</description>
+        <option>
+            <description>Ja</description>
+            <then>
+                <fact name="stijfheiddag">waar</fact>
+            </then>
+        </option>
+        <option>
+            <description>Nee</description>
+            <then>
+                <fact name="stijfheiddag">onwaar</fact>
+            </then>
+        </option>
+    </question>
+ 
+    <question>
+        <description>Heeft u last van kleine gewrichten (vingers of tenen)?</description>
+        <option>
+            <description>Ja</description>
+            <then>
+                <fact name="gewrichtenklein">waar</fact>
+            </then>
+        </option>
+        <option>
+            <description>Nee</description>
+            <then>
+                <fact name="gewrichtenklein">onwaar</fact>
+            </then>
+        </option>
+    </question>
+ 
+    <question>
+        <description>Heeft u last van grote gewrichten zoals uw rug, heupen, knieën, enkels, schouders, polsen of ellebogen?</description>
+        <option>
+            <description>Ja</description>
+            <then>
+                <fact name="gewrichtengroot">waar</fact>
+            </then>
+        </option>
+        <option>
+            <description>Nee</description>
+            <then>
+                <fact name="gewrichtengroot">onwaar</fact>
+            </then>
+        </option>
+    </question>
+    <question>
+        <description><![CDATA[<ul id='boundList' style="display:none;"></ul>
+<p>Selecteer de gewrichten waar u pijn heeft. U doet dit door op de locaties op de hand te klikken. Geselecteerde gewrichten krijgen een kleur.</p>
+<div style="clear:both;"></div>
+<img src="http://pkt15.ikhoefgeen.nl/LH_Top1.png" heigth="70%" width="70%" alt="" usemap="#Map" />
+ 
+<map name="Map" id="Map">
+    <area alt="" title="1" href="#" shape="poly" coords="281,208,306,204,336,206,332,237,303,240,279,243" />
+    <area alt="" title="1" href="#" shape="poly" coords="378,197,406,192,436,196,443,160,410,153,379,158" />
+    <area alt="" title="1" href="#" shape="poly" coords="482,154,516,151,550,164,555,127,524,120,488,122" />
+    <area alt="" title="1" href="#" shape="poly" coords="603,178,634,182,662,199,653,238,620,220,591,215" />
+    <area alt="" title="2" href="#" shape="poly" coords="279,264,303,259,330,260,332,291,304,296,279,299" />
+    <area alt="" title="2" href="#" shape="poly" coords="368,270,398,268,429,270,432,239,399,231,372,235" />
+    <area alt="" title="2" href="#" shape="poly" coords="529,284,496,277,459,276,466,240,496,234,506,237,537,252" />
+    <area alt="" title="2" href="#" shape="poly" coords="558,313,596,324,632,337,639,305,609,283,565,281" />
+    <area alt="" title="2" href="#" shape="poly" coords="667,452,728,491,705,523,666,502,641,480" />
+    <area alt="" title="3" href="#" shape="poly" coords="256,407,331,397,328,481,264,492,251,493" />
+    <area alt="" title="3" href="#" shape="poly" coords="337,398,413,406,412,483,335,481" />
+    <area alt="" title="3" href="#" shape="poly" coords="431,411,513,426,500,494,428,484" />
+    <area alt="" title="3" href="#" shape="poly" coords="528,430,605,454,590,538,515,502" />
+    <area alt="" title="3" href="#" shape="poly" coords="626,651,652,610,656,584,624,557,587,599" />
+</map>
+</body>
+ 
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.10.0.min.js"></script>
+<script src="jquery.imagemapster.js"></script>
+ 
+ 
+<script>
+// helper to return only unique values in an array
+ 
+ 
+// helper to return only unique values in an array
+ 
+Array.prototype.unique = function () {
+    var o = {}, i, l = this.length,
+        r = [];
+    for (i = 0; i < l; i += 1) o[this[i]] = this[i];
+    for (i in o) r.push(o[i]);
+    return r;
+};
+ 
+jQuery(document).ready(function($){
+     
+    var y = document.getElementsByClassName('options');
+     
+    var dip_code = y[0].children[0].children[0].children[0].value;
+    var pip_code = y[0].children[1].children[0].children[0].value;
+    var mcp_code = y[0].children[2].children[0].children[0].value;
+     
+    y[0].children[0].children[0].innerHTML = "<input id='submit_type' type='radio' name='answer' value='"+mcp_code+"'>Versturen";
+    y[0].children[1].style.display = "none";
+    y[0].children[2].style.display = "none";
+     
+ 
+     
+     
+    var img = $('img'),
+        list = $('#boundList');
+ 
+    // get each unique value of attribute "state" from the areas;
+    // sort them; then generate an unordered list from these values.
+    // add an attribute "state='KY'" to each one to bind to the map
+    // key
+     
+    var states = Array.prototype.map.call($('area'),
+    function (e) {
+        return e.getAttribute('title');
+    }).unique()
+        .sort()
+        .forEach(function (e) {
+        var el = $('<li />').attr('title', e).text(e);
+        list.append(el);
+    });
+ 
+     
+     
+    // bind selection of a state to the UL we created. The "listSelectedClass"
+    // option causes the class "selected" to be added or removed
+    // from the element in "boundList" whose "state" attribute has a value
+    // matching the mapKey for the selected area.
+     
+    img.mapster({
+        mapKey: 'title',
+        boundList: list.find('li'),
+        listKey: 'title',
+        fillColor: '355c97',
+        fillOpacity: 0.6,
+        listSelectedClass: 'selected'
+    });
+     
+    // bind click event 
+     
+    $(document).on('click','#boundList li',function(e) {
+        
+        var el = $(e.target);
+       // el.toggleClass('selected');
+        //debugger;
+        img.mapster('set',null,el.attr('state')); 
+        // changing selections manually doesn't result in the boundList
+        // being fired, we still have to set the state on the list item
+         
+        
+    }).on('click','#clearAll',function(e) {
+       e.preventDefault();
+         
+        img.mapster('set',false,img.mapster('get'));
+    });
+     
+    $(document).on('click',img,function(e) {
+       var selected = img.mapster('get');
+       var mcp = '3';
+       var pip = '2';
+       var dip = '1';
+        
+       if(selected.match(dip)){
+           y[0].children[0].children[0].innerHTML = "<input id='submit_type' type='radio' name='answer' value='"+dip_code+"'>Versturen";
+       }
+       else if(selected.match(pip)){
+           y[0].children[0].children[0].innerHTML = "<input id='submit_type' type='radio' name='answer' value='"+pip_code+"'>Versturen";
+       }
+       else if(selected.match(mcp)){
+           y[0].children[0].children[0].innerHTML = "<input id='submit_type' type='radio' name='answer' value='"+mcp_code+"'>Versturen";
+       }
+    });
+     
+});
+ 
+</script>]]></description>
+        <option>
+            <description>Dip</description>
+            <then>
+                <fact name="gewrichtentypeklein">dip</fact>
+            </then>
+        </option>
+        <option>
+            <description>Pip</description>
+            <then>
+                <fact name="gewrichtentypeklein">pip</fact>
+            </then>
+        </option>
+        <option>
+            <description>Mcp</description>
+            <then>
+                <fact name="gewrichtentypeklein">mcp</fact>
+            </then>
+        </option>
+    </question>
+     
+    <question>
+        <description>Heeft u gewrichtspijn in uw rug?</description>
+        <option>
+            <description>Ja</description>
+            <then>
+                <fact name="klachtenrug">waar</fact>
+            </then>
+        </option>
+        <option>
+            <description>Nee</description>
+            <then>
+                <fact name="klachtenrug">onwaar</fact>
+            </then>
+        </option>
+    </question>
+    <question>
+        <description>Heeft u gewrichtspijn in uw schouders?</description>
+        <option>
+            <description>Ja</description>
+            <then>
+                <fact name="klachtenschouders">waar</fact>
+            </then>
+        </option>
+        <option>
+            <description>Nee</description>
+            <then>
+                <fact name="klachtenschouders">onwaar</fact>
+            </then>
+        </option>
+    </question>
+    <question>
+        <description>Heeft u gewrichtspijn in uw heupen?</description>
+        <option>
+            <description>Ja</description>
+            <then>
+                <fact name="klachtenheupen">waar</fact>
+            </then>
+        </option>
+        <option>
+            <description>Nee</description>
+            <then>
+                <fact name="klachtenheupen">onwaar</fact>
+            </then>
+        </option>
+    </question>
+    <question>
+        <description>Heeft u gewrichtspijn in uw knieën?</description>
+        <option>
+            <description>Ja</description>
+            <then>
+                <fact name="klachtenknie">waar</fact>
+            </then>
+        </option>
+        <option>
+            <description>Nee</description>
+            <then>
+                <fact name="klachtenknie">onwaar</fact>
+            </then>
+        </option>
+    </question>
+    <question>
+        <description>Heeft u gewrichtspijn in uw enkels?</description>
+        <option>
+            <description>Ja</description>
+            <then>
+                <fact name="klachtenenkels">waar</fact>
+            </then>
+        </option>
+        <option>
+            <description>Nee</description>
+            <then>
+                <fact name="klachtenenkels">onwaar</fact>
+            </then>
+        </option>
+    </question>
+    <question>
+        <description>Heeft u gewrichtspijn in uw ellebogen?</description>
+        <option>
+            <description>Ja</description>
+            <then>
+                <fact name="klachtenellebogen">waar</fact>
+            </then>
+        </option>
+        <option>
+            <description>Nee</description>
+            <then>
+                <fact name="klachtenellebogen">onwaar</fact>
+            </then>
+        </option>
+    </question>
+    <question>
+        <description>Heeft u gewrichtspijn in uw polsen?</description>
+        <option>
+            <description>Ja</description>
+            <then>
+                <fact name="klachtenpolsen">waar</fact>
+            </then>
+        </option>
+        <option>
+            <description>Nee</description>
+            <then>
+                <fact name="klachtenpolsen">onwaar</fact>
+            </then>
+        </option>
+    </question>
+ 
+    <question>
+        <description><![CDATA[Wat gebeurt er met de pijn als u <a href="#" class="selector" title="Denk hierbij aan lopen of rekken">beweegt</a>?]]></description>
+        <option>
+            <description>De pijn wordt minder.</description>
+            <then>
+                <fact name="bewegenhelpt">waar</fact>
+            </then>
+        </option>
+        <option>
+            <description>De pijn blijft hetzelfde tijdens en na het bewegen.</description>
+            <then>
+                <fact name="bewegenhelpt">neutraal</fact>
+            </then>
+        </option>
+        <option>
+            <description>De pijn wordt erger door te bewegen.</description>
+            <then>
+                <fact name="bewegenhelpt">onwaar</fact>
+            </then>
+        </option>
+    </question>
+    <question>
+        <description>Maakt u gebruik van pijnstillers tegen uw gewrichtspijn? Zo ja, welke?</description>
+        <option>
+            <description>Ja, ik gebruik paracetamol.</description>
+            <then>
+                <fact name="pijnstillers">paracetamol</fact>
+            </then>
+        </option>
+        <option>
+            <description><![CDATA[Ja, een <a href="#" class="selector" id="pijnstillers" title="Voorbeelden zijn: Ibuprofen, Diclofenac, Naproxen, Meloxicam en Celecoxib."> ontstekingsremmende pijnstiller</a>.]]></description>
+            <then>
+                <fact name="pijnstillers">ontstekingsremmend</fact>
+            </then>
+        </option>
+        <option>
+            <description>Nee, ik gebruik geen pijnstillers.</description>
+            <then>
+                <fact name="pijnstillers">onwaar</fact>
+            </then>
+        </option>
+    </question>
+    <question>
+        <description>Gaat de pijn weg of wordt de pijn minder door het gebruik van pijnstillers?</description>
+        <option>
+            <description>Ja</description>
+            <then>
+                <fact name="pijnstillerswerkt">waar</fact>
+            </then>
+        </option>
+        <option>
+            <description>Nee</description>
+            <then>
+                <fact name="pijnstillerswerkt">onwaar</fact>
+            </then>
+        </option>
+    </question>
+    <question>
+        <description>Verricht u op dit moment of heeft u langere tijd fysiek zwaar werk verricht?</description>
+        <option>
+            <description>Ja</description>
+            <then>
+                <fact name="zwaarwerk">waar</fact>
+            </then>
+        </option>
+        <option>
+            <description>Nee</description>
+            <then>
+                <fact name="zwaarwerk">onwaar</fact>
+            </then>
+        </option>
+    </question>
+    <question>
+        <description><![CDATA[Heeft u last van rode en/of zilverwitte <a href="#" class="selector" id="huid" title="t"> schilferige verdikkingen</a> van de huid welke soms jeuken of pijn doen?]]></description>
+        <option>
+            <description>Ja</description>
+            <then>
+                <fact name="huidaandoening">waar</fact>
+            </then>
+        </option>
+        <option>
+            <description>Nee</description>
+            <then>
+                <fact name="huidaandoening">onwaar</fact>
+            </then>
+        </option>
+    </question>
+    <question>
+        <description><![CDATA[Heeft u last van <a href="#" class="selector" id="aanvallen" title="Een gewrichtspijn aanval is een stekende pijn in het getroffen gewricht (vaak de grote teen). Een aanval duurt vaak een paar uur maar kan ook 2 tot drie dagen aanhouden."> gewrichtspijn aanvallen</a>?]]></description>
+        <option>
+            <description>Ja</description>
+            <then>
+                <fact name="aanval">waar</fact>
+            </then>
+        </option>
+        <option>
+            <description>Nee</description>
+            <then>
+                <fact name="aanval">onwaar</fact>
+            </then>
+        </option>
+    </question>
+    <question>
+        <description>Heeft u last van uw ogen? Of heeft u recent last van een oogontsteking gehad?</description>
+        <option>
+            <description>Ja</description>
+            <then>
+                <fact name="ogen">waar</fact>
+            </then>
+        </option>
+        <option>
+            <description>Nee</description>
+            <then>
+                <fact name="ogen">onwaar</fact>
+            </then>
+        </option>
+    </question>
+        <question>
+        <description>Heeft u last van een knobbel op uw dikke teen?</description>
+        <option>
+            <description>Ja</description>
+            <then>
+                <fact name="knobbelteen">waar</fact>
+            </then>
+        </option>
+        <option>
+            <description>Nee</description>
+            <then>
+                <fact name="knobbelteen">onwaar</fact>
+            </then>
+        </option>
+    </question>
+    <question>
+        <description><![CDATA[Is uw pijn <a href="#" class="selector" id="symmetrie" title="U heeft pijn in dezelfde gewrichten aan beide kanten van het lichaam."> symmetrisch</a>?]]></description>
+        <option>
+            <description>Ja</description>
+            <then>
+                <fact name="symmetrisch">waar</fact>
+            </then>
+        </option>
+        <option>
+            <description>Nee</description>
+            <then>
+                <fact name="symmetrisch">onwaar</fact>
+            </then>
+        </option>
+    </question>
+ 
+ 
+ 
+ 
+ 
+ 
+</knowledge>

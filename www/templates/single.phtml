@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Reuma Test</title>
+		<link rel="stylesheet" href="webfrontend.css">
+	</head>
+	<body id="kennisbanken">
+		<nav class="site-nav">
+			<a href="#home">Home</a>
+		</nav>
+		<header>
+			<h1>Reuma test</h1>
+		</header>
+
+		<?php if ($errors): ?>
+		<section class="status-update">
+			<p>The following errors occurred:</p>
+			<ul>
+				<?php foreach ($errors as $error): ?>
+				<li title="<?=$this->attr(sprintf('%s:%d', $error->file, $error->line))?>"><?=$this->html($error->message)?></li>
+				<?php endforeach ?>
+			</ul>
+		</section>
+		<?php endif ?>
+
+		<section class="upload-knowledge-base-form">
+			<h2>Reuma Test</h2>
+			
+			<div>
+			<h3>Algemene Informatie:</h3>
+			
+			Deze site is speciaal gemaakt voor mensen die gewrichtspijn ervaren en zich afvragen of ze reuma hebben. Er bestaan veel vormen van reuma, ieder met zijn eigen karakteristieke eigenschappen. Door middel van een vragenlijst proberen wij te achterhalen of u last zou kunnen hebben van reuma. Als dat het geval is, proberen we het type reuma te bepalen om u vervolgens meer informatie over deze vorm van reuma te geven.			
+			
+			<h3>Uitleg:</h3>
+			Bij woorden die <a href="#" class="selector" title="Voorbeeld informatie">deze</a> kleur hebben kunt u extra informatie krijgen. Hierin geven wij bijvoorbeeld een toelichting van een ingewikkeld begrip, of een uitleg over de vraag. Om deze extra informatie weer te geven dient u met uw muis over het woord te bewegen. U hoeft dus niet op het groene woord te klikken.
+			
+				
+			</div>
+			
+			<br><br>
+			
+			
+			<form method="post" enctype="multipart/form-data">
+				<button onclick="location.href='http://pkt15.ikhoefgeen.nl/webfrontend.php'" type="button">Start de test</button>
+			</form>
+			
+			<h4>Disclaimer:</h4>
+			<small>Deze website dient slechts voor algemene informatieve doeleinden. De informatie op deze website wordt door ons met voortdurende zorg en aandacht samengesteld en onderhouden. Fouten kunnen echter niet altijd voorkomen worden. Er kunnen dan ook op geen enkele wijze rechten worden ontleend aan de op de website aangeboden informatie. www.pkt15.ikhoefgeen.nl aanvaardt geen aansprakelijkheid voor schade die op enigerlei wijze voortvloeit uit het gebruik van de website of uit de onvolledigheid en/of onjuistheid van de op de website verstrekte informatie.</small>
+			
+		</section>
+
+		
+
+		<footer>
+			<p>Product of the course <a href="http://www.rug.nl/ocasys/rug/vak/show?code=KIB.PKT10" target="_blank">Practical Knowledge Technology</a></p>
+		</footer>
+				<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+		<link rel="stylesheet" href="jquery-ui.min.css">
+		<script src="jquery-ui.min.js"></script>
+		
+		<script>
+			$( ".selector" ).tooltip();
+			
+			Array.prototype.forEach.call(
+				document.querySelectorAll("a[href^='#']"),
+				function(el) {
+					console.log(el);
+					el.addEventListener('click', function() {
+						var hash = el.href.substring(el.href.indexOf('#') + 1);
+						var ref = document.getElementById(hash);
+						
+						Array.prototype.forEach.call(
+							document.querySelectorAll('.highlight'),
+							function(node) {
+								node.classList.remove('highlight')
+							});
+						
+						if (ref)
+							ref.classList.add('highlight');
+					});
+				});
+		</script>
+	</body>
+</html>

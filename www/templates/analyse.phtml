@@ -1,0 +1,120 @@
+<?php
+function red_if_zero($value) {
+	return sprintf($value > 0 ? '%d' : '<strong>%d</strong>', $value);
+}
+?>
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Analyse <?=$this->html($kb->title)?></title>
+		<link rel="stylesheet" href="webfrontend.css">
+		<style>
+			h3 {
+				border-top: 1px solid black;
+				padding: 1em 0;
+			}
+
+			h3 small {
+				font-weight: normal;
+
+			}
+
+			.hint {
+				cursor: help;
+				border-bottom: 1px dashed black;
+			}
+
+		</style>
+	</head>
+	<body>
+		<nav class="site-nav">
+			<a href="webfrontend.php?kb=<?=urlencode($_GET['kb'])?>">Run <?=$this->html($kb->title)?></a>
+        	<a href="index.php">Home</a>
+		</nav>
+        
+        <header>
+                <h1>Analysis of <?=$this->html($kb->title)?></h1>
+                <p>Summary of all the facts, rules, questions in the knowledge base.</p>
+        </header>
+		
+		<dl class="stats">
+			<dt>Number of rules:</dt>
+			<dd><?=count($kb->rules)?></dd>
+			
+			<dt>Number of questions:</dt>
+			<dd><?=count($kb->questions)?></dd>
+		</dl>
+
+		<?php foreach ($stats as $fact): ?>
+		<h3 id="var_<?=$this->id($fact->name)?>">
+			<?=$this->html($fact->name)?>
+			<small>(<a href="webfrontend.php?kb=<?=urlencode($_GET['kb'])?>&amp;goals=<?=urlencode($fact->name)?>">try to infer this fact</a>)</small>
+		</h3>
+		<table class="fact-analysis analysis-table">
+			<thead>
+				<tr>
+					<th>Value</th>
+					<th><span class="hint" title="Questions that can cause the fact to become this value">Inferring questions</span></th>
+					<th><span class="hint" title="Rules that can cause the fact to become this value">Inferring rules</span></th>
+					<th><span class="hint" title="Sum of previous two columns, for determining if this value can be obtained">Inferring questions + rules</span></th>
+					<th><span class="hint" title="Rules that test for this value in their condition">Testing rules</span></th>
+				</tr>
+			</thead>
+			<tbody>
+			<?php foreach ($fact->values as $value => $value_stats): ?>
+				<tr>
+					<td>
+						<?php if (KnowledgeState::is_variable($value)): ?>
+						<a href="#var_<?=$this->id(KnowledgeState::variable_name($value))?>"><?=$this->html($value)?></a>
+						<?php else: ?>
+						<?=$this->html($value)?>
+						<?php endif ?>
+					</td>
+					<td><?=count($value_stats->inferringQuestions)?></td>
+					<td><?=count($value_stats->inferringRules)?></td>
+					<td><?=red_if_zero(count($value_stats->inferringQuestions) + count($value_stats->inferringRules))?></strong></td>
+					<td><?=red_if_zero(count($value_stats->dependingRules))?></td>
+				</tr>
+			<?php endforeach ?>
+			</tbody>
+		</table>
+		<?php endforeach ?>
+
+		<section id="info-domain">
+			<h2>Domain</h2>
+			<table class="domain-analysis analysis-table">
+				<thead>
+					<th>Fact name</th>
+					<th>Possible values</th>
+				</thead>
+				<tbody>
+				<?php foreach ($domain->values as $key => $values): ?>
+					<tr>
+						<th><?=$this->html($key)?></th>
+						<td>
+							<ul>
+							<?php foreach ($values as $value): ?>
+								<li><?=$this->html($value)?></li>
+							<?php endforeach ?>
+							</ul>
+						</td>
+					</tr>
+				<?php endforeach ?>
+				</tbody>
+			</table>
+		</section>
+
+		<section id="info-rules"> 
+			<h2>Rules</h2>
+
+			<?php foreach ($kb->rules as $rule): ?>
+			<section>
+				<?php $formatter = new HTMLFormatter(); echo $formatter->formatRule($rule)?>
+			</section>
+			<?php endforeach ?>
+		</section>
+		<footer>
+			<p>Source code available on <a href="https://github.com/jelmervdl/kennissysteem">Github</a>.</p>
+		</footer>
+	</body>
+</html>
